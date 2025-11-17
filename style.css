@@ -1,0 +1,27 @@
+/* Custom styles for smoother animations and canvas */
+body {
+    font-family: 'Inter', sans-serif;
+}
+canvas {
+    touch-action: none; /* Disable browser gestures like pan/zoom on canvas */
+    border-radius: 0.5rem; /* rounded-lg */
+}
+
+/* Note: Tailwind @apply directives won't work in a plain CSS file
+  without a build step. I'm converting them to regular CSS.
+*/
+
+/* Active tab style */
+.tab-button.active {
+    border-color: #6366f1; /* indigo-500 */
+    color: #4f46e5; /* indigo-600 */
+}
+/* Default tab style */
+.tab-button {
+    border-color: transparent;
+    color: #6b7280; /* gray-500 */
+}
+.tab-button:hover {
+    color: #374151; /* gray-700 */
+    border-color: #d1d5db; /* gray-300 */
+}

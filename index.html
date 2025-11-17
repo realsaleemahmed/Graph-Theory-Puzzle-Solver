@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Graph Theory Puzzle Solver</title>
+  <!-- Load Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Link to your custom stylesheet -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bg-gray-100 p-4 md:p-8 min-h-screen">
+
+  <div class="max-w-7xl mx-auto">
+    <h1 class="text-3xl md:text-5xl font-bold text-gray-900 text-center mb-8">
+      Graph Theory Puzzle Solver
+    </h1>
+
+    <!-- Tab Navigation -->
+    <div class="mb-6">
+      <div class="sm:hidden">
+        <label for="tabs" class="sr-only">Select a puzzle</label>
+        <select id="tabs" name="tabs"
+          class="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500">
+          <option selected>1. Königsberg Bridges</option>
+          <option>2. Maze Solver</option>
+          <option>3. Utility Problem</option>
+        </select>
+      </div>
+      <div class="hidden sm:block">
+        <div class="border-b border-gray-200">
+          <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+            <button id="tab-konigsberg"
+              class="tab-button active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">
+              1. Königsberg Bridges
+            </button>
+            <button id="tab-maze" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">
+              2. Maze Solver
+            </button>
+            <button id="tab-utility" class="tab-button whitespace-nowrap py-4 px-1 border-b-2 font-medium text-lg">
+              3. Utility Problem
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+
+    <!-- Puzzle Content Area -->
+    <div id="puzzle-content">
+
+      <!-- 1. Königsberg Bridges Solver -->
+      <div id="konigsberg-solver">
+        <p class="text-lg text-gray-700 mb-6 text-center">
+          This puzzle demonstrates <strong class="text-indigo-600">Eulerian Paths</strong>. Can you find a path that
+          crosses every "bridge" (edge) exactly once?
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Controls -->
+          <div class="md:col-span-1 bg-white p-6 rounded-lg shadow">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Controls</h3>
+            <div class="space-y-4">
+              <p class="text-gray-600">
+                - <strong class="text-indigo-600">Click</strong> on the canvas to add a "land mass" (node).
+                <br>
+                - <strong class="text-indigo-600">Drag</strong> between two nodes to create a "bridge" (edge).
+              </p>
+              <button id="solve-konigsberg"
+                class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-all shadow-md">
+                Solve
+              </button>
+              <button id="reset-konigsberg"
+                class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-all">
+                Reset
+              </button>
+              <button id="load-konigsberg"
+                class="w-full bg-teal-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-600 transition-all">
+                Load Classic 7-Bridge Problem
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas -->
+          <div class="md:col-span-2 bg-white rounded-lg shadow overflow-hidden">
+            <canvas id="konigsberg-canvas" class="w-full h-96 md:h-[600px] bg-gray-50 cursor-pointer"></canvas>
+          </div>
+
+          <!-- Results -->
+          <div class="md:col-span-3 bg-white p-6 rounded-lg shadow">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">The "Why"</h3>
+            <div id="konigsberg-result" class="text-center p-4 rounded-lg bg-gray-100">
+              <p class="text-xl font-medium text-gray-700">Click "Solve" to analyze your graph.</p>
+            </div>
+            <div id="konigsberg-details" class="mt-4 hidden">
+              <h4 class="text-xl font-bold text-gray-800 mb-2">Node Degrees:</h4>
+              <ul id="konigsberg-degree-list" class="list-disc list-inside text-gray-700">
+                <!-- Degrees will be populated here -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Maze Solver -->
+      <div id="maze-solver" class="hidden">
+        <p class="text-lg text-gray-700 mb-6 text-center">
+          This puzzle demonstrates <strong class="text-indigo-600">Pathfinding</strong>. We use <strong
+            class="text-teal-500">Breadth-First Search (BFS)</strong> to find the shortest path.
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Controls -->
+          <div class="md:col-span-1 bg-white p-6 rounded-lg shadow">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Controls</h3>
+            <div class="space-y-4">
+              <p class="text-gray-600">Select a brush and draw on the grid. "Wall" is draggable.</p>
+
+              <!-- Brush Selection -->
+              <div class="grid grid-cols-3 gap-2">
+                <button id="brush-wall"
+                  class="brush-button border-4 border-indigo-500 p-3 rounded-lg text-center font-medium">
+                  Wall
+                </button>
+                <button id="brush-start"
+                  class="brush-button border-2 border-gray-300 p-3 rounded-lg text-center font-medium">
+                  Start
+                </button>
+                <button id="brush-end"
+                  class="brush-button border-2 border-gray-300 p-3 rounded-lg text-center font-medium">
+                  End
+                </button>
+              </div>
+
+              <button id="solve-maze"
+                class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-all shadow-md">
+                Solve
+              </button>
+              <button id="reset-maze"
+                class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-all">
+                Reset Grid
+              </button>
+              <button id="maze-explanation"
+                class="w-full bg-teal-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-teal-600 transition-all">
+                How does this work?
+              </button>
+            </div>
+          </div>
+
+          <!-- Canvas -->
+          <div class="md:col-span-2 bg-white rounded-lg shadow overflow-hidden flex justify-center items-center p-2">
+            <canvas id="maze-canvas" class="bg-gray-50 cursor-pointer" width="600" height="600"
+              style="width: 100%; height: auto; max-width: 600px; max-height: 600px; aspect-ratio: 1/1;"></canvas>
+          </div>
+
+          <!-- Results -->
+          <div class="md:col-span-3 bg-white p-6 rounded-lg shadow">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">The "Why"</h3>
+            <div id="maze-result" class="text-center p-4 rounded-lg bg-gray-100">
+              <p class="text-xl font-medium text-gray-700">Draw a maze and click "Solve".</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Utility Problem -->
+      <div id="utility-solver" class="hidden">
+        <p class="text-lg text-gray-700 mb-6 text-center">
+          This puzzle demonstrates <strong class="text-indigo-600">Graph Planarity</strong>. The "Three Utilities"
+          problem is a classic $K_{3,3}$ graph. Is it possible to connect 3 utilities to 3 houses without any lines
+          crossing?
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Controls -->
+          <div class="md:col-span-1 bg-white p-6 rounded-lg shadow">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">Controls</h3>
+            <div id="utility-controls" class="space-y-4">
+              <p class="text-gray-600">
+                - <strong class="text-indigo-600">Drag</strong> between a utility (top) and a house (bottom) to draw a
+                "pipe".
+                <br>
+                - You cannot draw from utility-to-utility or house-to-house.
+                <br>
+                - Lines cannot cross!
+              </p>
+
+              <button id="reset-utility"
+                class="w-full bg-gray-500 text-white font-bold py-3 px-4 rounded-lg hover:bg-gray-600 transition-all">
+                Reset Edges
+              </button>
+              <button id="utility-explanation"
+                class="w-full bg-purple-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-purple-700 transition-all">
+                Stuck? Show Explanation
+              </button>
+
+              <!-- --- BUG FIX: Replaced button with a checkbox --- -->
+              <div class="relative flex items-start mt-4 pt-4 border-t">
+                <div class="flex h-6 items-center">
+                  <input id="allowCrossingCheckbox" type="checkbox"
+                    class="h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
+                </div>
+                <div class="ml-3 text-sm leading-6">
+                  <label for="allowCrossingCheckbox" class="font-medium text-gray-900">Allow Crossing ("Trick"
+                    Mode)</label>
+                  <p class="text-gray-500">Check this if you're stuck on 8 lines to draw the 9th "impossible" line.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Canvas -->
+          <div class="md:col-span-2 bg-white rounded-lg shadow overflow-hidden">
+            <canvas id="utility-canvas" class="w-full h-96 md:h-[600px] bg-gray-50 cursor-pointer"></canvas>
+          </div>
+
+          <!-- Results -->
+          <div class="md:col-span-3 bg-white p-6 rounded-lg shadow">
+            <h3 class="text-2xl font-bold text-gray-900 mb-4">The "Why"</h3>
+            <div id="utility-result" class="text-center p-4 rounded-lg bg-gray-100">
+              <p class="text-2xl font-medium text-gray-700">
+                <span id="utility-edge-count" class="text-indigo-600 font-bold">0</span> / 9 Edges Drawn
+              </p>
+            </div>
+            <div id="utility-result-why" class="mt-4">
+              <!-- Explanation content goes here -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Link to your JavaScript file -->
+  <script src="script.js" defer></script>
+</body>
+
+</html>
