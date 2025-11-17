@@ -1,15 +1,26 @@
 Graph Theory Puzzle Solver
 
-<p align="center">
-<img alt="HTML5" src="https://www.google.com/search?q=https://img.shields.io/badge/HTML5-E34F26%3Fstyle%3Dfor-the-badge%26logo%3Dhtml5%26logoColor%3Dwhite"/>
-<img alt="CSS3" src="https://www.google.com/search?q=https://img.shields.io/badge/CSS3-1572B6%3Fstyle%3Dfor-the-badge%26logo%3Dcss3%26logoColor%3Dwhite"/>
-<img alt="JavaScript" src="https://www.google.com/search?q=https://img.shields.io/badge/JavaScript-F7DF1E%3Fstyle%3Dfor-the-badge%26logo%3Djavascript%26logoColor%3Dblack"/>
-<img alt="Tailwind CSS" src="https://www.google.com/search?q=https://img.shields.io/badge/Tailwind_CSS-38B2AC%3Fstyle%3Dfor-the-badge%26logo%3Dtailwind-css%26logoColor%3Dwhite"/>
-</p>
-
 An interactive web application designed to solve and visually demonstrate classic graph theory puzzles. This tool provides a hands-on way to understand complex concepts like Eulerian paths, pathfinding algorithms, and graph planarity.
 
 This project is built with plain HTML, CSS (using Tailwind CSS), and JavaScript, with a focus on clear visualization and interactivity.
+
+📖 Table of Contents
+
+🚀 Features
+
+1. Königsberg Bridges Solver
+
+2. Maze Solver
+
+3. The Utility Problem ($K_{3,3}$)
+
+📺 Demo
+
+🛠️ How to Run
+
+🗂️ Project Structure
+
+🔬 Puzzle Explanations
 
 🚀 Features
 
